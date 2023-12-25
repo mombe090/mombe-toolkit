@@ -15,4 +15,4 @@
 build-deploy:
   extends: [.dagger]
   script:
-    - dagger run go run ci/main.go
+    - cd dagger && dagger run go run ci/main.go
