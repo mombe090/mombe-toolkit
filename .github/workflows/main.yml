@@ -21,7 +21,7 @@ jobs:
         with:
           go-version: ">=1.21"
       - name: Install Dagger
-        run: go get dagger.io/dagger
+        run: cd dagger && go get dagger.io/dagger
       - name: Install Dagger CLI
         run: cd /usr/local && { curl -L https://dl.dagger.io/dagger/install.sh | sh; cd -; }
       - name: Build and publish with Dagger
