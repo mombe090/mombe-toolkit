@@ -1,0 +1,31 @@
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+
+	"dagger.io/dagger"
+)
+
+func main() {
+	ctx := context.Background()
+
+	// initialize Dagger client
+	client, err := dagger.Connect(ctx, dagger.WithLogOutput(os.Stderr))
+	if err != nil {
+		panic(err)
+	}
+	defer client.Close()
+
+	contextDir := client.Host().Directory(".")
+
+	ref, err := contextDir.
+		DockerBuild().
+		Publish(ctx, "mombe090/boot3-dagger") 
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Published image to :%s\n", ref)
+}

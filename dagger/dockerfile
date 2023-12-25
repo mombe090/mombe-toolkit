@@ -1,0 +1,12 @@
+FROM amazoncorretto:17.0.9 as builder
+RUN mkdir /app
+WORKDIR /app
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} boot3.jar
+
+FROM  amazoncorretto:17.0.9-alpine3.18
+RUN mkdir -p /app/boot3
+WORKDIR /app/boot3
+COPY --from=builder /app/boot3.jar .
+
+ENTRYPOINT ["java", "-jar", "boot3.jar"]
